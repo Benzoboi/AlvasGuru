@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'">
+    <title>Sleep Watcher</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>Sleep Watcher (MVP)</h1>
+    <nav>
+      <button class="tab active" data-tab="controls">Controls</button>
+      <button class="tab" data-tab="recordings">Recordings</button>
+      <button class="tab" data-tab="reports">Reports</button>
+    </nav>
+
+    <div id="messageBox" class="messageBox info" hidden></div>
+
+    <section id="controls" class="tabContent">
+      <div class="row">
+        <button id="startBtn">Start</button>
+        <button id="stopBtn" disabled>Stop</button>
+      </div>
+
+      <div class="row">
+        <label>Camera
+          <select id="cameraSelect"></select>
+        </label>
+        <label>Microphone
+          <select id="micSelect"></select>
+        </label>
+      </div>
+
+      <div class="row">
+        <label>Motion threshold <input id="motionThresh" type="number" value="10" min="0" step="1"></label>
+        <label>Audio threshold <input id="audioThresh" type="number" value="0.02" min="0" step="0.01"></label>
+      </div>
+      <p class="hint">
+        Thresholds are compared against the live values in the status line below - watch them for a
+        minute in the real room, then set each threshold just above its resting level.
+      </p>
+
+      <fieldset>
+        <legend>How monitoring starts</legend>
+        <div class="row modeRow">
+          <label><input type="radio" name="mode" id="modeManual"> Manual - I press Start and Stop</label>
+          <label><input type="radio" name="mode" id="modeScheduled"> Scheduled - start and stop by the clock</label>
+        </div>
+        <div class="row" id="scheduleRow">
+          <label>Start <input id="cfgStart" type="time"></label>
+          <label>End <input id="cfgEnd" type="time"></label>
+        </div>
+        <p class="hint">
+          One or the other, never both. In Manual mode the times are ignored and the buttons decide.
+          In Scheduled mode the app starts itself at Start and stops at End - the buttons are disabled.
+          Overnight windows such as 22:00-08:00 work. The app has to stay open either way.
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Recording &amp; storage</legend>
+        <div class="row">
+          <label>Pre-buffer (s) <input id="cfgPrebuffer" type="number" min="5" max="300" step="1"></label>
+          <label>Cooldown (s) <input id="cfgCooldown" type="number" min="0" max="3600" step="1"></label>
+          <label>Keep for (days) <input id="cfgRetention" type="number" min="1" max="3650" step="1"></label>
+        </div>
+        <div class="row">
+          <button id="saveCfg">Save config</button>
+          <button id="cleanupNow">Run cleanup now</button>
+        </div>
+      </fieldset>
+
+      <div id="schedulerStatus" class="schedulerStatus">Loading configuration...</div>
+
+      <div id="status">Idle</div>
+      <div id="triggerIndicator" class="triggerIndicator idle">Waiting for motion or sound</div>
+      <div id="eventLog" class="eventLog"></div>
+      <video id="video" autoplay playsinline muted></video>
+      <canvas id="canvas" hidden></canvas>
+    </section>
+
+    <section id="recordings" class="tabContent" hidden>
+      <h2>Recordings</h2>
+      <div class="row">
+        <button id="refreshRecordings">Refresh</button>
+      </div>
+      <div id="recordingList">Loading...</div>
+      <video id="player" controls hidden></video>
+    </section>
+
+    <section id="reports" class="tabContent" hidden>
+      <h2>Daily Reports</h2>
+      <div class="row">
+        <label for="daySelect">Day</label>
+        <select id="daySelect"></select>
+        <button id="exportCsv">Export CSV</button>
+      </div>
+      <div id="reportsList">Loading...</div>
+      <canvas id="reportsChart" width="640" height="200"></canvas>
+    </section>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>

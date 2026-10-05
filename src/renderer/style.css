@@ -1,0 +1,79 @@
+body { font-family: Arial, Helvetica, sans-serif; margin: 16px; color: #222 }
+
+/* The video rule below sets display:block, which would beat the user-agent
+   [hidden] rule - so hiding has to win explicitly. */
+[hidden] { display: none !important }
+
+h1 { font-size: 20px }
+h2 { font-size: 16px }
+
+nav { margin-bottom: 12px }
+.tab { margin-right: 8px; padding: 6px 12px; cursor: pointer }
+.tab.active { font-weight: bold; border-bottom: 2px solid #4a90e2 }
+
+.row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 8px 0;
+}
+
+fieldset { margin-top: 8px; padding: 8px; border: 1px solid #ccc }
+legend { padding: 0 4px }
+
+input[type="number"] { width: 90px }
+
+.hint { margin: 4px 0; font-size: 12px; color: #666; max-width: 640px }
+
+.modeRow label { cursor: pointer }
+/* The schedule times only apply in scheduled mode - fade them out otherwise. */
+#scheduleRow.disabled { opacity: 0.45 }
+
+.schedulerStatus {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-left: 3px solid #4a90e2;
+  background: #f4f7fb;
+  font-size: 13px;
+}
+
+.messageBox { margin: 8px 0; padding: 8px 12px; border-radius: 6px; font-size: 13px }
+.messageBox.info { background: #eef3fa; color: #234 }
+.messageBox.ok { background: #e6f4ea; color: #1e4620 }
+.messageBox.error { background: #fdecea; color: #8b1a12 }
+
+#status { margin-top: 8px; font-weight: bold; font-family: Consolas, monospace; font-size: 13px }
+
+.triggerIndicator {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  font-weight: bold;
+}
+.triggerIndicator.idle { background: #eaeaea; color: #333 }
+.triggerIndicator.active {
+  background: #e53935;
+  color: white;
+  animation: blink 0.8s infinite alternate;
+}
+@keyframes blink { from { opacity: 0.6 } to { opacity: 1 } }
+
+.eventLog {
+  margin-top: 8px;
+  min-height: 24px;
+  color: #333;
+  font-size: 13px;
+}
+.eventLog div { margin: 2px 0 }
+
+video { width: 640px; height: 360px; background: #000; display: block }
+#player { margin-top: 8px }
+
+.recordingRow { display: flex; gap: 8px; align-items: center; margin: 4px 0 }
+.recordingRow button.danger { color: #8b1a12 }
+
+.reportSummary { font-weight: bold; margin-bottom: 4px }
+.reportRow { font-size: 13px; margin: 2px 0 }
+#reportsChart { border: 1px solid #ddd; display: block; margin-top: 8px; background: #fff }
